@@ -11,11 +11,18 @@ import java.sql.SQLException;
 
 /**
  *
- * @author HP
+ * @author YATIN PATEL
  */
 public class Credentials {
     
-     public static Connection getConnection() throws SQLException {
+    /**
+     * Provides a Connection to the Xampp "c0648442" DataBase
+     * Created connection in getConnection Method
+     * Created product Table in dataBase
+     * @return the connection object or null if a connection failed
+     * @throws SQLException
+     */
+    public static Connection getConnection() throws SQLException {
         Connection conn = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");

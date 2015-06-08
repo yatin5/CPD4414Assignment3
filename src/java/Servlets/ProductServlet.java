@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package databaseCredentials;
-
+package Servlets;
+import databaseCredentials.Credentials;
+import static databaseCredentials.Credentials.getConnection;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -21,16 +22,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sun.security.krb5.Credentials;
 
 /**
  *
- * @author HP
+ * @author YATIN PATEL
  */
-@WebServlet("/products")
-public class productServlets extends HttpServlet {
+@WebServlet("/ProductServlet")
+public class ProductServlet extends HttpServlet {
     private Object JSONValue;
     
+    /**
+     * Handles the HTTP <code>GET</code> method. doGet Method take two arguments
+     * It will select data from product table Also Handle Exception
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
      protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -50,8 +58,15 @@ public class productServlets extends HttpServlet {
         }
     }
     
-
- @Override
+    /**
+     * Handles the HTTP <code>Post</code> method. doGet Method takes two arguments
+     * It will select data from product table Also Handle Exception
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Set<String> keyValues = request.getParameterMap().keySet();
@@ -76,7 +91,15 @@ public class productServlets extends HttpServlet {
         }
 
     }
-     @Override
+
+    /**
+     * doPut Method takes two Arguments and This method Will update Entries in
+     * product Table. This will also catch SQLException and Display an error
+     * message.
+     * @param request
+     * @param response
+     */
+    @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) {
 
         Set<String> keySet = request.getParameterMap().keySet();
@@ -95,7 +118,16 @@ public class productServlets extends HttpServlet {
             System.out.println("Error in writing output: " + ex.getMessage());
         }
     }
-      @Override
+
+    /**
+     * doDelete Method takes two Arguments and This method Will Delete Entries in
+     * product Table. This will also catch SQLException and Display an error
+     * message.
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Set<String> keySet = request.getParameterMap().keySet();
         try (PrintWriter out = response.getWriter()) {
@@ -117,11 +149,25 @@ public class productServlets extends HttpServlet {
             System.err.println("SQL Exception Error: " + ex.getMessage());
         }
     }
-      @Override
+
+    /**
+     *
+     * @return a string containing Servlet Description
+     */
+    @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
     
+     /**
+     * resultMethod accepts two arguments and it executes the Query to get ProductID,
+     * name, description, quantity
+     *
+     * @param query
+     * @param params
+     * @throws SQLException
+     * @return
+     */
     
      private String resultMethod(String query, String... params) {
         StringBuilder sb = new StringBuilder();
@@ -145,12 +191,22 @@ public class productServlets extends HttpServlet {
 
             }
 
-            jsonString = JSONValue.toJSONString(l1);
+            jsonString = JSONValue.toString();
         } catch (SQLException ex) {
             System.err.println("SQL Exception Error: " + ex.getMessage());
         }
         return jsonString.replace("},", "},\n");
     }
+     
+      /**
+     * doUpdate accepts two arguments and it executes the Query to update ProductID,
+     * name, description, quantity
+     *
+     * @param query
+     * @param params
+     * @throws SQLException
+     * @return
+     */
      
       private int doUpdate(String query, String... params) {
         int numChanges = 0;
@@ -165,7 +221,5 @@ public class productServlets extends HttpServlet {
         }
         return numChanges;
     }
-     
-    
     
 }
