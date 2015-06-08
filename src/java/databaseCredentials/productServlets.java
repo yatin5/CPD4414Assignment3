@@ -110,6 +110,10 @@ public class productServlets extends HttpServlet {
             System.err.println("SQL Exception Error: " + ex.getMessage());
         }
     }
+      @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
     
     
 }
