@@ -152,6 +152,20 @@ public class productServlets extends HttpServlet {
         return jsonString.replace("},", "},\n");
     }
      
+      private int doUpdate(String query, String... params) {
+        int numChanges = 0;
+        try (Connection conn = Credentials.getConnection()) {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            for (int i = 1; i <= params.length; i++) {
+                pstmt.setString(i, params[i - 1]);
+            }
+            numChanges = pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            System.err.println("SQL EXception in doUpdate Method" + ex.getMessage());
+        }
+        return numChanges;
+    }
+     
     
     
 }
