@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class Credentials {
     
     /**
-     * Provides a Connection to the Xampp "c0648442" DataBase
+     * Provides a Connection to the Xampp "c0654874" DataBase
      * Created connection in getConnection Method
      * Created product Table in dataBase
      * @return the connection object or null if a connection failed
